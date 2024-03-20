@@ -53,7 +53,7 @@ def create_table():
 def insert_data(name, phone_num, email, job_role, file_name):
     conn = psycopg2.connect(host=db_host, user=db_user, password=db_password, dbname=db_name)
     cur = conn.cursor()
-    cur.execute("INSERT INTO resumes (name, phone_num, email, job_role, file_id) VALUES (%s, %s, %s, %s, %s)",
+    cur.execute("INSERT INTO resumes (name, phone_num, email, job_role, file_name) VALUES (%s, %s, %s, %s, %s)",
                 (name, phone_num, email, job_role, file_name))
     conn.commit()
     conn.close()

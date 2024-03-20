@@ -2,8 +2,10 @@ from flask import Flask, render_template, request
 from google.auth import credentials
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload,MediaIoBaseUpload
 import os
+
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -27,7 +29,11 @@ def submit():
     job_role=request.form.get("job")
     uploaded_file = request.files['file']
 
-    temp_file_path = os.path.join(app.root_path, uploaded_file.filename)
+    file_stream = BytesIO()
+    uploaded_file.save(file_stream)
+    file_stream.seek(0)  
+
+    #temp_file_path = os.path.join(app.root_path, uploaded_file.filename)
 
     # Process and store the data/file as needed
 #https://drive.google.com/drive/folders/1N6od-qw78TCy9v1nGcCg_Qilnyldi3Ad?usp=sharing
@@ -37,8 +43,9 @@ def submit():
         'parents': ['1N6od-qw78TCy9v1nGcCg_Qilnyldi3Ad']  # Update with your folder ID
     }
     mime_type = 'application/pdf' if uploaded_file.filename.endswith('.pdf') else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    media_body = MediaFileUpload(uploaded_file, resumable=True,mimetype=mime_type)
+    #media_body = MediaFileUpload(uploaded_file, resumable=True,mimetype=mime_type)
     #media_body = MediaFileUpload(temp_file_path, resumable=True,mimetype=mime_type)
+    media_body = MediaIoBaseUpload(file_stream, mimetype=mime_type, resumable=True)
     file = drive_service.files().create(body=file_metadata, media_body=media_body,fields="id").execute()
 
     return render_template("submit.html")

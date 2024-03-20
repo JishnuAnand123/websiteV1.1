@@ -37,8 +37,8 @@ def submit():
         'parents': ['1N6od-qw78TCy9v1nGcCg_Qilnyldi3Ad']  # Update with your folder ID
     }
     mime_type = 'application/pdf' if uploaded_file.filename.endswith('.pdf') else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    #media_body = MediaFileUpload(uploaded_file, resumable=True,mimetype=mime_type)
-    media_body = MediaFileUpload(temp_file_path, resumable=True,mimetype=mime_type)
+    media_body = MediaFileUpload(uploaded_file, resumable=True,mimetype=mime_type)
+    #media_body = MediaFileUpload(temp_file_path, resumable=True,mimetype=mime_type)
     file = drive_service.files().create(body=file_metadata, media_body=media_body,fields="id").execute()
 
     return render_template("submit.html")

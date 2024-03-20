@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Form</title>
+</head>
+<body>
+    <h1 style="font-size:50px">Trewq</h1>
+    <div align="center">
+    <h2>Applying for jobs has never been easier</h2>
+
+
+    <h4>Upload Details</h4>
+    <form action="/submit" method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="phone" id="phone" name="phone" pattern="[0-9]{10}" required ><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="job">Choose a job</label>
+        <select name="job" id="job"  required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="Full stack Developer">Full stack developer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Sales">Sales</option>
+
+        </select><br><br>
+        
+        <label for="file">Choose File:</label>
+        <input type="file" id="file" name="file" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+</body>
+</html>
